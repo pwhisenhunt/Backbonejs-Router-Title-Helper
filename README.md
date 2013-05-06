@@ -4,15 +4,15 @@ Backbone.js Router Title Helper
 When developing single page applications the page title is often over looked and the usability of your application suffers. This script aims to make it easier to update the page title of your application by providing a single place for maintaining your applications page titles. This script overrides the Backbone.js Router to provide page title updates based on the current route. Note: if you have another plugin that touches the Backbone.Router you may run into issues.
 
 ###Use
-Include the script in your page after Backbone.js has loaded.
+This script is tested against Backbone.js 1.0.0. Include the script in your page after Backbone.js has loaded.
 
-```console
+```javascript
 <script src="backbone.js" type="text/javascript"></script>
 <script src="backbone.router.title.helper.js" type="text/javascript"></script>
 ```
  and then in your router provide a titles object literal whose keys map to route function names and whose values are page titles. Be sure to provide a default for routes to fall back to in case you forget to include a title. An error is thrown if you fail to specify a routes title and a default title is not found. Example router:
 
-```console
+```javascript
 var Router = Backbone.Router.extend({
     routes: {
         'a': 'aRoute',
@@ -37,7 +37,7 @@ var Router = Backbone.Router.extend({
 
 If for some reason you need to have an initialize function in your router, remember to call the super class so that the page titles still work. An example calling the super class:
 
-```console
+```javascript
 var Router = Backbone.Router.extend({
     routes: {
         'a': 'aRoute',
