@@ -8,6 +8,9 @@ module.exports = function(grunt) {
         src: '<%= pkg.name %>.js',
         dest: '<%= pkg.name %>.min.js'
       }
+    },
+    mocha: {
+      index: ['test/index.html']
     }
   });
 
@@ -16,5 +19,7 @@ module.exports = function(grunt) {
 
   // Default task(s).
   grunt.registerTask('default', ['uglify']);
+
+  grunt.loadNpmTasks('grunt-mocha');
 
 };
