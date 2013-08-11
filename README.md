@@ -58,21 +58,6 @@ var Router = Backbone.Router.extend({
 });
 ```
 
-If for some reason you need to have an initialize function in your router, remember to call the super class so that the page titles still work. An example calling the super class:
-
-```javascript
-var Router = Backbone.Router.extend({
-    ...
-
-    initialize: function(options) {
-        // call the super classes initialize
-        this.constructor.__super__.initialize.apply(this, [options]);
-    }
-
-    ...
-});
-```
-
 ## Contribution
 
 Feel free to contiribute!
