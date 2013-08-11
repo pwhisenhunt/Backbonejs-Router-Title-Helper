@@ -10,23 +10,31 @@ describe('RouterTitleHelper', function () {
 			routes: {
 				"items": "index",
 				"items/:id": "show",
-				"items/:id/edit": "edit"
+				"items/:id/edit": "edit",
+				"items/:id/details": "details"
 			},
 			titles: {
 				"index": "Index Title",
-				"default": "Default Title",
 				"edit": function() {
-					return "Editing item"
-				}
+					return "Editing item";
+				},
+				"details": "detailsTitle",
+				"default": "Default Title"
 			},
 			index: function() {
-				console.log("Hello from #index");
+				// console.log("Hello from #index");
 			},
 			show: function(id) {
-				console.log("Hello from #show, id: "+id);
+				// console.log("Hello from #show, id: "+id);
 			},
 			edit: function(id) {
-				console.log("Hello from #edit, id: "+id);
+				// console.log("Hello from #edit, id: "+id);
+			},
+			details: function(id) {
+				// console.log("Hello from #details, id: "+id);
+			},
+			detailsTitle: function() {
+				return "Item details";
 			}
 		});
 		this.router = new AppRouter();
@@ -63,5 +71,12 @@ describe('RouterTitleHelper', function () {
 		this.router.navigate("items/1/edit", defaultRouterOptions);
 		this.routeSpy.should.have.been.callOnce;
 		document.title.should.equal("Editing item");
+	});
+
+	it('should change title to return value of function if a router method with this name found', function () {
+		this.router.bind("route:details", this.routeSpy);
+		this.router.navigate("items/1/details", defaultRouterOptions);
+		this.routeSpy.should.have.been.callOnce;
+		document.title.should.equal("Item details");
 	});
 });
