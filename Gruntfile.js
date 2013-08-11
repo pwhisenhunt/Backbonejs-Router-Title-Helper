@@ -16,10 +16,8 @@ module.exports = function(grunt) {
 
   // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-mocha');
 
   // Default task(s).
   grunt.registerTask('default', ['uglify']);
-
-  grunt.loadNpmTasks('grunt-mocha');
-
 };

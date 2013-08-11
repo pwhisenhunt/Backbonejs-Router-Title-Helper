@@ -8,12 +8,13 @@
 
     _.extend(Backbone.Router.prototype, {
         route: function(route, name, callback) {
-            wrappedCallback = function() {
-                if (callback) {
-                  callback.apply(this, arguments);
-                }
+            var wrappedCallback = function() {
                 var title = this.titles[name];
+
+                if(callback) callback.apply(this, arguments);
+
                 if(title) {
+
                     if(typeof title === "function") {
                         document.title = title.apply(this, arguments);
                     } else {

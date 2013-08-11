@@ -35,7 +35,7 @@ var Router = Backbone.Router.extend({
 });
 ```
 
-It is allowed to specify function or a router method name to set its return value as a title. This is useful, when you need to compute value for a title. For example:
+You can also specify a function or a router method name as the return value for a title. This is useful for when you need to compute a value for a title. For example:
 
 ```javascript
 var Router = Backbone.Router.extend({
