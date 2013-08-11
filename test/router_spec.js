@@ -7,6 +7,7 @@ describe('RouterTitleHelper', function () {
 
 	before(function () {
 		AppRouter = Backbone.Router.extend({
+			initialize: function() {},
 			routes: {
 				"items": "index",
 				"items/:id": "show",
@@ -21,22 +22,15 @@ describe('RouterTitleHelper', function () {
 				"details": "detailsTitle",
 				"default": "Default Title"
 			},
-			index: function() {
-				// console.log("Hello from #index");
-			},
-			show: function(id) {
-				// console.log("Hello from #show, id: "+id);
-			},
-			edit: function(id) {
-				// console.log("Hello from #edit, id: "+id);
-			},
-			details: function(id) {
-				// console.log("Hello from #details, id: "+id);
-			},
+			index: function() {},
+			show: function() {},
+			edit: function() {},
+			details: function() {},
 			detailsTitle: function() {
 				return "Item details";
 			}
 		});
+		this.initializerSpy = sinon.spy(AppRouter.prototype, "initialize");
 		this.router = new AppRouter();
 		this.routeSpy = sinon.spy();
 	});
@@ -49,6 +43,10 @@ describe('RouterTitleHelper', function () {
 	afterEach(function () {
 		this.router.navigate("items", defaultRouterOptions);
 		Backbone.history.stop();
+	});
+
+	it('should safely extend custom initializer function', function () {
+		this.initializerSpy.should.have.been.calledOnce;
 	});
 
 	it('should change title to `Default Title` when no title specified', function () {
