@@ -11,8 +11,14 @@ Backbone.Router = Backbone.Router.extend({
         this.on('route', function(router, route, params) {
 
             if(that.titles) {
-                if(that.titles[router]) document.title = typeof that.titles[router] === "function" ? that.titles[router].apply(this, arguments) : that.titles[router];
-                else if(that.titles.default) document.title = that.titles.default;
+                var title = that.titles[router];
+                if(title) {
+                    if(typeof title === "function") {
+                        document.title = title.apply(this, arguments);
+                    } else {
+                        document.title = that[title] ? that[title].apply(this, arguments) : title;
+                    }
+                } else if(that.titles.default) document.title = that.titles.default;
                 else throw 'Backbone.js Router Title Helper: No title found for route:' + router + ' and no default route specified.';
             }
         });
