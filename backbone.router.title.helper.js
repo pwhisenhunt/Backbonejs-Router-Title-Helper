@@ -9,18 +9,19 @@
     _.extend(Backbone.Router.prototype, {
         route: function(route, name, callback) {
             var wrappedCallback = function() {
-                var title = this.titles[name];
+                if (this.titles) {
+                    var title = this.titles[name];
 
-                if(callback) callback.apply(this, arguments);
-
-                if(title) {
-
-                    if(typeof title === "function") {
-                        document.title = title.apply(this, arguments);
-                    } else {
-                        document.title = this[title] ? this[title].apply(this, arguments) : title;
-                    }
-                } else if(this.titles.default) document.title = this.titles.default;
+                    if(title) {
+                        if(typeof title === "function") {
+                            document.title = title.apply(this, arguments);
+                        } else {
+                            document.title = this[title] ? this[title].apply(this, arguments) : title;
+                        }
+                    } else if(this.titles.default) document.title = this.titles.default;
+                }
+                if(!callback) callback = this[name];
+                callback.apply(this, arguments);
             };
             return originalRoute.call(this, route, name, wrappedCallback);
         }
