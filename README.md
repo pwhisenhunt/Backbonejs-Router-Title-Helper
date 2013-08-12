@@ -6,7 +6,7 @@ When developing single page applications the page title is often over looked and
 ## Use
 This script is tested against Backbone.js 1.0.0. Include the script in your page after Backbone.js has loaded.
 
-```javascript
+```html
 <script src="backbone.js" type="text/javascript"></script>
 <script src="backbone.router.title.helper.js" type="text/javascript"></script>
 ```
