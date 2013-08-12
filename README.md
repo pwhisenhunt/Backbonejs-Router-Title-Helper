@@ -6,7 +6,7 @@ When developing single page applications the page title is often over looked and
 ## Use
 This script is tested against Backbone.js 1.0.0. Include the script in your page after Backbone.js has loaded.
 
-```javascript
+```html
 <script src="backbone.js" type="text/javascript"></script>
 <script src="backbone.router.title.helper.js" type="text/javascript"></script>
 ```
@@ -35,7 +35,7 @@ var Router = Backbone.Router.extend({
 });
 ```
 
-You can also specify a function or a router method name as the return value for a title. This is useful for when you need to compute a value for a title. For example:
+You can also specify a function or a router method name as the return value for a title. This is useful when you need to compute a value for a title. For example:
 
 ```javascript
 var Router = Backbone.Router.extend({
@@ -62,4 +62,4 @@ var Router = Backbone.Router.extend({
 
 Feel free to contiribute!
 
-First run `npm install` in the project directory to fetch dependencies. Then use `grunt mocha` run tests and `grunt uglify:build` to build minified version.
+First run `npm install` in the project directory to fetch dependencies. Then use `grunt mocha` to run tests and `grunt uglify:build` to build minified version.
