@@ -12,7 +12,8 @@ describe('RouterTitleHelper', function () {
 				"items": "index",
 				"items/:id": "show",
 				"items/:id/edit": "edit",
-				"items/:id/details": "details"
+				"items/:id/details": "details",
+				"items/:id/more-details": "moreDetails"
 			},
 			titles: {
 				"index": "Index Title",
@@ -20,6 +21,7 @@ describe('RouterTitleHelper', function () {
 					return "Editing item";
 				},
 				"details": "detailsTitle",
+				"moreDetails": new jQuery.Deferred(),
 				"default": "Default Title"
 			},
 			index: function() {},
@@ -28,6 +30,9 @@ describe('RouterTitleHelper', function () {
 			details: function() {},
 			detailsTitle: function() {
 				return "Item details";
+			},
+			moreDetails: function () {
+				this.titles["moreDetails"].resolve("More item details");
 			}
 		});
 		this.initializerSpy = sinon.spy(AppRouter.prototype, "initialize");
@@ -76,5 +81,12 @@ describe('RouterTitleHelper', function () {
 		this.router.navigate("items/1/details", defaultRouterOptions);
 		this.routeSpy.should.have.been.callOnce;
 		document.title.should.equal("Item details");
+	});
+
+	it('should handle the deferred object: must set title when it is resolved', function () {
+		this.router.bind("route:moreDetails", this.routeSpy);
+		this.router.navigate("items/1/more-details", defaultRouterOptions);
+		this.routeSpy.should.have.been.callOnce;
+		document.title.should.equal("More item details");
 	});
 });

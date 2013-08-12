@@ -15,6 +15,12 @@
                     if(title) {
                         if(typeof title === "function") {
                             document.title = title.apply(this, arguments);
+                        } else if(typeof title === "object" && title.promise) {
+                            $.when(title).then(function(title) {
+                                document.title = title;
+                            }, function() {
+                                throw("Your deferred job failed. No title to set.")
+                            });
                         } else {
                             document.title = this[title] ? this[title].apply(this, arguments) : title;
                         }
