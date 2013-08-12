@@ -16,8 +16,11 @@
                         if(typeof title === "function") {
                             document.title = title.apply(this, arguments);
                         } else if(typeof title === "object" && title.promise) {
-                            $.when(title).then(function(title) {
-                                document.title = title;
+                            _this = this;
+                            $.when(title).then(function(deferredTitle) {
+                                document.title = deferredTitle;
+                                delete _this.titles[name];
+                                _this.titles[name] = new jQuery.Deferred();
                             }, function() {
                                 throw("Your deferred job failed. No title to set.")
                             });

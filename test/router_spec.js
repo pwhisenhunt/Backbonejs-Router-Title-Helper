@@ -31,8 +31,8 @@ describe('RouterTitleHelper', function () {
 			detailsTitle: function() {
 				return "Item details";
 			},
-			moreDetails: function () {
-				this.titles["moreDetails"].resolve("More item details");
+			moreDetails: function (id) {
+				this.titles["moreDetails"].resolve("More " + id + " item details");
 			}
 		});
 		this.initializerSpy = sinon.spy(AppRouter.prototype, "initialize");
@@ -83,10 +83,14 @@ describe('RouterTitleHelper', function () {
 		document.title.should.equal("Item details");
 	});
 
-	it('should handle the deferred object: must set title when it is resolved', function () {
+	it('should handle the deferred object: must set title when it is resolved, and immidiately recreated', function () {
 		this.router.bind("route:moreDetails", this.routeSpy);
 		this.router.navigate("items/1/more-details", defaultRouterOptions);
 		this.routeSpy.should.have.been.callOnce;
-		document.title.should.equal("More item details");
+		document.title.should.equal("More 1 item details");
+		this.routeSpy.reset();
+		this.router.navigate("items/2/more-details", defaultRouterOptions);
+		this.routeSpy.should.have.been.callOnce;
+		document.title.should.equal("More 2 item details");
 	});
 });
