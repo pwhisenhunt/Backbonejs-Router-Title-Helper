@@ -11,14 +11,19 @@
             var wrappedCallback = function() {
                 if (this.titles) {
                     var title = this.titles[name];
-
                     if(title) {
                         if(typeof title === "function") {
                             document.title = title.apply(this, arguments);
                         } else {
                             document.title = this[title] ? this[title].apply(this, arguments) : title;
                         }
-                    } else if(this.titles.default) document.title = this.titles.default;
+                    } else if (this.titles.default) {
+                        if (typeof this.titles.default === "function") {
+                            document.title = this.titles.default.apply(this, arguments);
+                        } else {
+                            document.title = this.titles.default;
+                        }                        
+                    } 
                 }
                 if(!callback) callback = this[name];
                 callback.apply(this, arguments);

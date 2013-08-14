@@ -55,8 +55,16 @@ describe('RouterTitleHelper', function () {
 		this.routeSpy.should.have.been.callOnce;
 		document.title.should.equal("Default Title");
 	});
+	
+	it('should change title to `Default Title as return value of function` when no title specified and default title value defined using function', function () {
+		this.router.titles["default"] = function () { return "Default Title as return value of function" };
+		this.router.bind("route:show", this.routeSpy);
+		this.router.navigate("items/1", defaultRouterOptions);
+		this.routeSpy.should.have.been.callOnce;
+		document.title.should.equal("Default Title as return value of function");
+	});
 
-	it('should change title to `Index Title` when it is specified in `titles` as a tilte for `index` route', function () {
+	it('should change title to `Index Title` when it is specified in `titles` as a title for `index` route', function () {
 		this.router.bind("route:index", this.routeSpy);
 		this.router.navigate("items/1", defaultRouterOptions);
 		this.router.navigate("items", defaultRouterOptions);
