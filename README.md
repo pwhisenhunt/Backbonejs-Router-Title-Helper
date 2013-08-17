@@ -62,4 +62,4 @@ var Router = Backbone.Router.extend({
 
 Feel free to contiribute!
 
-First run `npm install` in the project directory to fetch dependencies. Then use `grunt mocha` to run tests and `grunt uglify:build` to build minified version.
+First run `npm install` in the project directory to fetch dependencies. Then simply run `grunt` to run  linter, tests and to build minified version.
