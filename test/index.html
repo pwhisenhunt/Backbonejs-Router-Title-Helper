@@ -21,7 +21,11 @@
     <script src="./router_spec.js"></script>
     <script>
       if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
-      else { mocha.run(); }
+      else {
+          onload = function(){
+              var runner = mocha.run();
+          };
+      }
     </script>
   </head>
   <body>
