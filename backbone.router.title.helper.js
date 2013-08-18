@@ -31,10 +31,10 @@
             if (!title && !this.titles['default']) { throw new Error("Backbonejs-Router-Title-Helper: No title found and no default title provided."); }
             if (typeof title === "object" && title.promise) { return this._setPromisedTitle(title, routeName); }
 
-            document.title = typeof title === "function" ? title.apply(this, arguments)
-                : this[title] ? this[title].apply(this, arguments) : typeof title === "string"
-                ? title : typeof this.titles['default'] === "function"
-                ? this.titles['default'].apply(this, arguments) : this.titles['default'];
+            document.title = typeof title === "function" ? title.apply(this, arguments) :
+                    this[title] ? this[title].apply(this, arguments) :
+                            typeof title === "string" ? title :
+                                    typeof this.titles['default'] === "function" ? this.titles['default'].apply(this, arguments) : this.titles['default'];
 
             this.trigger("change:title", routeName, document.title);
         },
