@@ -1,6 +1,6 @@
 /** @author Phillip Whisenhunt
  * @description This script aims to make it easier to update the page title of single page
- * applications by providing a single place for maintaining your applications page titles. 
+ * applications by providing a single place for maintaining your applications page titles.
  * See https://github.com/pwhisenhunt/Backbonejs-Router-Title-Helper for more details.
  */
 (function (document, Backbone, _, jQuery) {
@@ -30,9 +30,12 @@
 
             if (!title && !this.titles['default']) { throw new Error("Backbonejs-Router-Title-Helper: No title found and no default title provided."); }
             if (typeof title === "object" && title.promise) { return this._setPromisedTitle(title, routeName); }
-            document.title = typeof title === "function" ? title.apply(this, arguments) :
-                    this[title] ?  this[title].apply(this, arguments) :
-                            typeof title === "string" ? title : this.titles['default'];
+
+            document.title = typeof title === "function" ? title.apply(this, arguments)
+                : this[title] ? this[title].apply(this, arguments) : typeof title === "string"
+                ? title : typeof this.titles['default'] === "function"
+                ? this.titles['default'].apply(this, arguments) : this.titles['default'];
+
             this.trigger("change:title", routeName, document.title);
         },
 
