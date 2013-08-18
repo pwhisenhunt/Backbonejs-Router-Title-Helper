@@ -1,4 +1,4 @@
-Backbone.js Router Title Helper
+Backbone.js Router Title Helper [![Build Status](https://travis-ci.org/pwhisenhunt/Backbonejs-Router-Title-Helper.png)](https://travis-ci.org/pwhisenhunt/Backbonejs-Router-Title-Helper)
 ==============================
 
 When developing single page applications the page title is often over looked and the usability of your application suffers. This script aims to make it easier to update the page title of your application by providing a single place for maintaining your applications page titles. This script overrides the Backbone.js Router to provide page title updates based on the current route. Note: if you have another plugin that touches the Backbone.Router you may run into issues.
@@ -62,4 +62,4 @@ var Router = Backbone.Router.extend({
 
 Feel free to contiribute!
 
-First run `npm install` in the project directory to fetch dependencies. Then use `grunt mocha` to run tests and `grunt uglify:build` to build minified version.
+First run `npm install` in the project directory to fetch dependencies. Then simply run `grunt` to run  linter, tests and to build minified version.
