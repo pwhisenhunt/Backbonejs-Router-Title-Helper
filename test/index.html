@@ -20,9 +20,8 @@
     <script src="../backbone.router.title.helper.js"></script>
     <script src="./router_spec.js"></script>
     <script>
-      onload = function(){
-        var runner = mocha.run();
-      };
+      if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
+      else { mocha.run(); }
     </script>
   </head>
   <body>
