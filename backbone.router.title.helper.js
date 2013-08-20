@@ -28,7 +28,7 @@
         _setTitle: function (routeName) {
             var title = this.titles[routeName];
 
-            if (!title && !this.titles['default']) { throw new Error("Backbonejs-Router-Title-Helper: No title found and no default title provided."); }
+            if (title === "undefined" && this.titles['default'] === "undefined") { throw new Error("Backbonejs-Router-Title-Helper: No title found and no default title provided."); }
             if (typeof title === "object" && title.promise) { return this._setPromisedTitle(title, routeName); }
 
             document.title = typeof title === "function" ? title.apply(this, arguments) :

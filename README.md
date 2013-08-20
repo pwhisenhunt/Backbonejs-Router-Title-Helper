@@ -41,17 +41,16 @@ You can also specify a function or a router method name as the return value for 
 var Router = Backbone.Router.extend({
     ...
 
-    appName: "Sample Application",
-
     titles: {
-        'cRoute': function() {
-            return "cRouteTitle — " + this.appName;
+        "cRoute": function() {
+            return "cTitle — " + this.titles.default;
         },
-        'dRoute': "dRouteTitle"
+        "dRoute": "dRouteTitle",
+        "default": "Sample Application"
     },
 
     dRouteTitle: function() {
-        return "dRouteTitle — " + this.appName;
+        return "dTitle — " + this.titles.default;
     }
 
     ...
