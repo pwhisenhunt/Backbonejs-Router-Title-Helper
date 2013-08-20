@@ -57,6 +57,35 @@ var Router = Backbone.Router.extend({
 });
 ```
 
+## Promised title
+
+Sometimes, to set a page title, you need to fetch the model data from the server first. This helper has support
+for promised values. Example usage with jQuery.Deferred:
+
+```javascript
+var Router = Backbone.Router.extend({
+    ...
+
+    routes: {
+        "show/:id": "show"
+    },
+
+    titles: {
+        "show": new jQuery.Deferred()
+    },
+
+    show: function (id) {
+        var model = new App.Model({id: id});
+        this.listenTo(model, "sync", function (model) {
+            this.titles['show'].resolve(model.get('title'));
+        });
+        model.fetch();
+    }
+
+    ...
+});
+```
+
 ## Contribution
 
 Feel free to contiribute!
