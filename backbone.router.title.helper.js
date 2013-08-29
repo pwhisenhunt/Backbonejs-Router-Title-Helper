@@ -3,10 +3,18 @@
  * applications by providing a single place for maintaining your applications page titles.
  * See https://github.com/pwhisenhunt/Backbonejs-Router-Title-Helper for more details.
  */
-(function (document, Backbone, _, jQuery) {
+/*jslint browser: true*/
+/*globals define, $*/
+(function (factory) {
     'use strict';
-    var $ = jQuery,
-        originalRoute = Backbone.Router.prototype.route;
+    if (typeof define === 'function' && define.amd) {
+        define(['underscore', 'backbone'], factory);
+    } else {
+        factory(_, Backbone);
+    }
+}(function (_, Backbone) {
+    'use strict';
+    var originalRoute = Backbone.Router.prototype.route;
 
     _.extend(Backbone.Router.prototype, {
 
@@ -48,4 +56,4 @@
             return originalRoute.call(this, route, name, wrappedCallback);
         }
     });
-}(document, Backbone, _, jQuery));
+}));
