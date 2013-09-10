@@ -1,0 +1,10 @@
+{
+  "name": "backbone.router.title.helper",
+  "version": "0.1.0",
+  "main": "backbone.router.title.helper.js",
+  "dependencies": {
+    "jquery": ">=1.6",
+    "underscore": ">=1.5",
+    "backbone": "~1.0"
+  }
+}
