@@ -14,45 +14,73 @@
     }
 }(function (_, Backbone) {
     'use strict';
+
     var originalRoute = Backbone.Router.prototype.route;
 
     _.extend(Backbone.Router.prototype, {
 
         _setPromisedTitle: function (title, routeName) {
             var _this = this;
-            if (jQuery) {
-                if (!jQuery.Deferred) { throw new Error("Backbonejs-Router-Title-Helper: jQuery >= 1.5 is required to use Deferred object"); }
-                $.when(title).then(function (deferredTitle) {
-                    document.title = deferredTitle;
-                    _this.trigger("change:title", routeName, deferredTitle);
-                    delete _this.titles[routeName];
-                    _this.titles[routeName] = new jQuery.Deferred();
-                }, function () {
-                    throw new Error("Backbonejs-Router-Title-Helper: Your deferred job failed. No title to set.");
-                });
-            } else { throw new Error("Backbonejs-Router-Title-Helper: Currently only jQuery.Deferred object is supported"); }
+
+            if (!jQuery) {
+                throw new Error('Backbonejs-Router-Title-Helper: Currently only jQuery.Deferred object is supported');
+            }
+
+            if (!jQuery.Deferred) {
+                throw new Error('Backbonejs-Router-Title-Helper: jQuery >= 1.5 is required to use Deferred object');
+            }
+
+            $.when(title).then(function (deferredTitle) {
+                document.title = deferredTitle;
+                _this.trigger('change:title', routeName, deferredTitle);
+                delete _this.titles[routeName];
+                _this.titles[routeName] = new jQuery.Deferred();
+            }, function () {
+                throw new Error('Backbonejs-Router-Title-Helper: Your deferred job failed. No title to set.');
+            });
         },
 
         _setTitle: function (routeName) {
-            var title = this.titles[routeName];
+            var title = this.titles[routeName], newTitle;
 
-            if (title === "undefined" && this.titles['default'] === "undefined") { throw new Error("Backbonejs-Router-Title-Helper: No title found and no default title provided."); }
-            if (typeof title === "object" && title.promise) { return this._setPromisedTitle(title, routeName); }
+            if (_.isUndefined(title) && _.isUndefined(this.titles['default'])) {
+                throw new Error('Backbonejs-Router-Title-Helper: No title found and no default title provided.');
+            }
 
-            document.title = typeof title === "function" ? title.apply(this, arguments) :
-                    this[title] ? this[title].apply(this, arguments) :
-                            typeof title === "string" ? title :
-                                    typeof this.titles['default'] === "function" ? this.titles['default'].apply(this, arguments) : this.titles['default'];
+            if (_.has(title, 'promise')) {
+                return this._setPromisedTitle(title, routeName);
+            }
 
-            this.trigger("change:title", routeName, document.title);
+            if (_.isFunction(title)) {
+                newTitle = title.apply(this, arguments);
+            } else if (this[title]) {
+                newTitle = this[title].apply(this, arguments);
+            } else if (_.isString(title)) {
+                newTitle = title;
+            } else if (_.isFunction(this.titles['default'])) {
+                newTitle = this.titles['default'].apply(this, arguments);
+            } else {
+                newTitle = this.titles['default'];
+            }
+
+            document.title = newTitle;
+
+            this.trigger('change:title', routeName, newTitle);
         },
 
         route: function (route, name, callback) {
             var wrappedCallback = function () {
-                if (!callback) { callback = this[name]; }
+                if (!callback) {
+                    callback = this[name];
+                }
+
                 callback.apply(this, arguments);
-                if (this.titles) { this._setTitle(name); }
+
+                if (this.titles) {
+                    this._setTitle(name);
+                }
             };
+
             return originalRoute.call(this, route, name, wrappedCallback);
         }
     });
